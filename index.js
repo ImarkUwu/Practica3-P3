@@ -22,5 +22,18 @@ app.put('/tasks/:id', (req, res) => {
   const { title, completed } = req.body;
   if (title !== undefined) task.title = title;
   if (completed !== undefined) task.completed = completed;
+app.post('/tasks', (req, res) => {
+  const { title } = req.body;
+  if (!title) return res.status(400).json({ error: 'El título es requerido' });
+  const newTask = { id: nextId++, title, completed: false };
+  tasks.push(newTask);
+  res.status(201).json(newTask);
+app.get('/tasks', (req, res) => {
+  res.json(tasks);
+});
+
+app.get('/tasks/:id', (req, res) => {
+  const task = tasks.find(t => t.id === parseInt(req.params.id));
+  if (!task) return res.status(404).json({ error: 'Tarea no encontrada' });
   res.json(task);
 });
