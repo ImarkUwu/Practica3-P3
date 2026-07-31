@@ -16,6 +16,11 @@ app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
 
+app.delete('/tasks/:id', (req, res) => {
+  const index = tasks.findIndex(t => t.id === parseInt(req.params.id));
+  if (index === -1) return res.status(404).json({ error: 'Tarea no encontrada' });
+  tasks.splice(index, 1);
+  res.status(204).send();
 app.put('/tasks/:id', (req, res) => {
   const task = tasks.find(t => t.id === parseInt(req.params.id));
   if (!task) return res.status(404).json({ error: 'Tarea no encontrada' });
