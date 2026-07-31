@@ -16,6 +16,12 @@ app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
 
+app.post('/tasks', (req, res) => {
+  const { title } = req.body;
+  if (!title) return res.status(400).json({ error: 'El título es requerido' });
+  const newTask = { id: nextId++, title, completed: false };
+  tasks.push(newTask);
+  res.status(201).json(newTask);
 app.get('/tasks', (req, res) => {
   res.json(tasks);
 });
