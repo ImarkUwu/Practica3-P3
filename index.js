@@ -16,6 +16,8 @@ app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
 
+app.use((req, res) => {
+  res.status(404).json({ error: 'Ruta no encontrada' });
 app.delete('/tasks/:id', (req, res) => {
   const index = tasks.findIndex(t => t.id === parseInt(req.params.id));
   if (index === -1) return res.status(404).json({ error: 'Tarea no encontrada' });
