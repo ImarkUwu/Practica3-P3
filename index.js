@@ -22,4 +22,12 @@ app.post('/tasks', (req, res) => {
   const newTask = { id: nextId++, title, completed: false };
   tasks.push(newTask);
   res.status(201).json(newTask);
+app.get('/tasks', (req, res) => {
+  res.json(tasks);
+});
+
+app.get('/tasks/:id', (req, res) => {
+  const task = tasks.find(t => t.id === parseInt(req.params.id));
+  if (!task) return res.status(404).json({ error: 'Tarea no encontrada' });
+  res.json(task);
 });
